@@ -15,3 +15,9 @@
 - **Why:** His site's bundle contains exactly 9 long-form + 17 shorts/reels + 5 thumbnails; the first pass only used the 9 long-form. Instagram cannot be embedded without their script, so those link out using his own `reel-N.jpg` covers.
 - **Hero:** Cropped `public/portrait.jpg` to the face/shoulders (140,250)-(760,1090) of his `main.jpg` and moved the desktop portrait anchor from `top-[2vh]` to `-top-[8vh]` so the face clears the PORTFOLIO wordmark.
 - **Assets:** Shorts covers via YouTube `oar2.jpg` (vertical 1080x1920); thumbnails re-encoded to ≤1280px JPEG (originals were 2.7 MB PNGs). Pillow was installed to a scratch dir only, not into the project.
+
+## 2026-11-10 — GitHub Pages deploy
+- **What:** Added `.github/workflows/pages.yml` (build with Node 22 → `actions/deploy-pages`), `base: process.env.BASE_PATH ?? '/'` in `vite.config.ts`, and an `asset()` helper in `src/config/portfolio.ts` that prefixes `public/` files with `import.meta.env.BASE_URL`. Added `src/vite-env.d.ts` for the `import.meta.env` types. Renamed the package from the leftover `adithya-ai-architect-portfolio` to `vardhan-portfolio`.
+- **Why:** Project pages are served at `/<repo>/`, so the template's absolute `/portrait.jpg`-style paths would 404. The workflow derives the base from the repo name (`BASE_PATH=/<repo>/`), so local dev and any future custom domain still work at `/`. Actions deploy chosen over a `gh-pages` branch to keep built files out of git.
+- **Verified:** `vite preview` at `/vardhan-portfolio/` served all asset types with 200 and 0 of 49 images broken.
+- **One manual step:** Pages source must be set to "GitHub Actions" in the repo settings (the workflow's token cannot enable Pages itself).

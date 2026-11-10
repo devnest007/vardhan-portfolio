@@ -39,16 +39,18 @@ export interface StackGroup {
   reverse?: boolean;
 }
 
+/** Prefix public/ files with the deploy base (e.g. /vardhan-portfolio/ on GitHub Pages). */
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 const yt = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 const short = (youtubeId: string): Reel => ({
   youtubeId,
   url: `https://www.youtube.com/shorts/${youtubeId}`,
-  image: `/shorts/${youtubeId}.jpg`,
+  image: asset(`shorts/${youtubeId}.jpg`),
   platform: "YouTube",
 });
 const insta = (code: string, n: number): Reel => ({
   url: `https://www.instagram.com/reel/${code}/`,
-  image: `/shorts/reel-${n}.jpg`,
+  image: asset(`shorts/reel-${n}.jpg`),
   platform: "Instagram",
 });
 
@@ -68,7 +70,7 @@ export const PORTFOLIO_CONFIG = {
     email: "editwithaditya.co@gmail.com",
     phone: "+91 95155 44989",
     phoneHref: "tel:+919515544989",
-    portraitUrl: "/portrait.jpg",
+    portraitUrl: asset("portrait.jpg"),
     socials: {
       instagram: "https://instagram.com/aditya.locked",
     },
@@ -292,7 +294,7 @@ export const PORTFOLIO_CONFIG = {
     },
   ].map((p) => ({
     ...p,
-    image: `/projects/${p.id}.jpg`,
+    image: asset(`projects/${p.id}.jpg`),
     demoUrl: yt(p.id),
   })) as Project[],
 
@@ -317,7 +319,7 @@ export const PORTFOLIO_CONFIG = {
     short("jwkpncHd9tw"),
   ] as Reel[],
 
-  thumbnails: [1, 2, 3, 4, 5].map((n) => `/thumbs/${n}.jpg`),
+  thumbnails: [1, 2, 3, 4, 5].map((n) => asset(`thumbs/${n}.jpg`)),
 
   breakout: {
     headline: ["CUT TO", "STORY"],
